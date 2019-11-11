@@ -16,6 +16,18 @@ public class BluetoothConnect extends AppCompatActivity {
         InitBluetooth();
     }
 
+    public void InitBluetooth() {
+        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        if(bluetoothAdapter == null) {
+            noBt();
+        }
+        else if(!bluetoothAdapter.isEnabled()) {
+            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
+        }
+    }
+
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == REQUEST_ENABLE_BT) {
@@ -28,17 +40,5 @@ public class BluetoothConnect extends AppCompatActivity {
     public void noBt() {
         Intent noBtIntent = new Intent(this, NoBluetooth.class);
         startActivity(noBtIntent);
-    }
-
-    public void InitBluetooth() {
-        BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-
-        if(bluetoothAdapter == null) {
-            noBt();
-        }
-        else if(!bluetoothAdapter.isEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
-            startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
-        }
     }
 }
