@@ -32,7 +32,9 @@ public class BluetoothConnect extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if(resultCode == 0) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == REQUEST_ENABLE_BT && resultCode == RESULT_CANCELED) {
             startActivity(noBtIntent);
         }
     }
