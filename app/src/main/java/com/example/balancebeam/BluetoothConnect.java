@@ -16,12 +16,25 @@ public class BluetoothConnect extends AppCompatActivity {
         InitBluetooth();
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(requestCode == REQUEST_ENABLE_BT) {
+            if(resultCode == RESULT_CANCELED) {
+                noBt();
+            }
+        }
+    }
+
+    public void noBt() {
+        Intent noBtIntent = new Intent(this, NoBluetooth.class);
+        startActivity(noBtIntent);
+    }
+
     public void InitBluetooth() {
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         if(bluetoothAdapter == null) {
-            Intent noBtIntent = new Intent(this, NoBluetooth.class);
-            startActivity(noBtIntent);
+            noBt();
         }
         else if(!bluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
