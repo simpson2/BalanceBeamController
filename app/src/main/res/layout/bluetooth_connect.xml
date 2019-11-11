@@ -6,30 +6,4 @@
     android:layout_height="match_parent"
     tools:context=".BluetoothConnect">
 
-    <TextView
-        android:id="@+id/title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-
-        android:text="@string/title"
-        android:textSize="20sp"
-        android:textStyle="bold"
-        android:background="@color/colorPrimary"
-        android:textColor="@android:color/white"
-        android:gravity="center_horizontal"
-
-        />
-
-    <ListView
-        android:id="@+id/device_address_list"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/title"
-
-        />
-
-
 </android.support.constraint.ConstraintLayout>
