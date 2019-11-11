@@ -8,6 +8,7 @@ import android.os.Bundle;
 public class BluetoothConnect extends AppCompatActivity {
 
     public static final int REQUEST_ENABLE_BT = 1;
+    Intent noBtIntent = new Intent(this, NoBluetooth.class);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,15 +20,20 @@ public class BluetoothConnect extends AppCompatActivity {
     public void InitBluetooth() {
         BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
+        Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
+
         if(bluetoothAdapter == null) {
-            Intent noBtIntent = new Intent(this, NoBluetooth.class);
             startActivity(noBtIntent);
         }
         else if(!bluetoothAdapter.isEnabled()) {
-            Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
     }
 
-
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == 0) {
+            startActivity(noBtIntent);
+        }
+    }
 }
