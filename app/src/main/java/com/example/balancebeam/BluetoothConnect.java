@@ -26,6 +26,23 @@ public class BluetoothConnect extends AppCompatActivity {
         initBluetooth();
     }
 
+    final BroadcastReceiver receiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+
+            if(BluetoothDevice.ACTION_FOUND.equals(action)) {
+                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+                String deviceName = device.getName();
+                String deviceAddress = device.getAddress();
+
+                TextView view = findViewById(R.id.debug);
+
+                view.setText(deviceAddress);
+            }
+        }
+    };
+
     public void initBluetooth() {
 
         if(bluetoothAdapter == null) {
@@ -48,23 +65,6 @@ public class BluetoothConnect extends AppCompatActivity {
             }
         }
     }
-
-    final BroadcastReceiver receiver = new BroadcastReceiver() {
-        @Override
-        public void onReceive(Context context, Intent intent) {
-            String action = intent.getAction();
-
-            if(BluetoothDevice.ACTION_FOUND.equals(action)) {
-                BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                String deviceName = device.getName();
-                String deviceAddress = device.getAddress();
-
-                TextView view = findViewById(R.id.debug);
-
-                view.setText(deviceAddress);
-            }
-        }
-    };
 
     @Override
     protected void onDestroy() {
