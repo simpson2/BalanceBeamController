@@ -24,9 +24,6 @@ public class BluetoothConnect extends AppCompatActivity {
         registerReceiver(receiver, filter);
 
         initBluetooth();
-
-        TextView view = findViewById(R.id.debug);
-
     }
 
     public void initBluetooth() {
@@ -61,6 +58,10 @@ public class BluetoothConnect extends AppCompatActivity {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
                 String deviceName = device.getName();
                 String deviceAddress = device.getAddress();
+
+                TextView view = findViewById(R.id.debug);
+
+                view.setText(deviceAddress);
             }
         }
     };
