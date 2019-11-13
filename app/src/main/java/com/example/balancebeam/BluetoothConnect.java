@@ -8,17 +8,26 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+import android.widget.ArrayAdapter;
+import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class BluetoothConnect extends AppCompatActivity {
 
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    public static final int REQUEST_ENABLE_BT = 1;
+    private ArrayAdapter<String> newDevicesArrayAdapter;
+    private static final int REQUEST_ENABLE_BT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bluetooth_connect);
+
+        ListView newDevicesListView = findViewById(R.id.device_list);
+        newDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.bluetooth_connect);
+        newDevicesListView.setAdapter(newDevicesArrayAdapter);
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(receiver, filter);
@@ -33,15 +42,20 @@ public class BluetoothConnect extends AppCompatActivity {
 
             if(BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
-                String deviceName = device.getName();
+
                 String deviceAddress = device.getAddress();
-
-                TextView view = findViewById(R.id.debug);
-
-                view.setText(deviceAddress);
+                newDevicesArrayAdapter.add(deviceAddress);
+                newDevicesArrayAdapter.notifyDataSetChanged();
             }
         }
     };
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+
+        unregisterReceiver(receiver);
+    }
 
     public void initBluetooth() {
 
@@ -52,9 +66,6 @@ public class BluetoothConnect extends AppCompatActivity {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
-        else {
-            bluetoothAdapter.startDiscovery();
-        }
     }
 
     @Override
@@ -63,17 +74,12 @@ public class BluetoothConnect extends AppCompatActivity {
             if(resultCode == RESULT_CANCELED) {
                 noBt();
             }
-            else {
-                bluetoothAdapter.startDiscovery();
-            }
         }
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-
-        unregisterReceiver(receiver);
+    public void onClickSearchDevices(View view) {
+        bluetoothAdapter.startDiscovery();
+        Toast.makeText(this, "Searching for devices...", Toast.LENGTH_LONG).show();
     }
 
     public void noBt() {

@@ -7,14 +7,26 @@
     android:layout_height="match_parent"
     tools:context=".BluetoothConnect">
 
-    <TextView
-        android:id="@+id/debug"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+    <ListView
+        android:id="@+id/device_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@id/start_bluetooth"
+        app:layout_constraintStart_toStartOf="parent">
+
+
+
+    </ListView>
+
+    <Button
+        android:id="@+id/start_bluetooth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="" />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:text="@string/initiate_pairing"
+        android:onClick="onClickSearchDevices"/>
+
 
 </android.support.constraint.ConstraintLayout>
