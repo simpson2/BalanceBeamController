@@ -9,15 +9,16 @@ import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class BluetoothConnect extends AppCompatActivity {
 
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    private ArrayAdapter<String> newDevicesArrayAdapter;
+    ListView newDevicesListView = findViewById(R.id.device_list);
+    ArrayAdapter<String> newDevicesArrayAdapter;
     private static final int REQUEST_ENABLE_BT = 1;
 
     @Override
@@ -25,9 +26,7 @@ public class BluetoothConnect extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bluetooth_connect);
 
-        ListView newDevicesListView = findViewById(R.id.device_list);
-        newDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.bluetooth_connect);
-        newDevicesListView.setAdapter(newDevicesArrayAdapter);
+        newDevicesArrayAdapter = new ArrayAdapter<>(this, R.layout.bluetooth_connect_device_list);
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(receiver, filter);
@@ -45,7 +44,7 @@ public class BluetoothConnect extends AppCompatActivity {
 
                 String deviceAddress = device.getAddress();
                 newDevicesArrayAdapter.add(deviceAddress);
-                newDevicesArrayAdapter.notifyDataSetChanged();
+                newDevicesListView.setAdapter(newDevicesArrayAdapter);
             }
         }
     };
@@ -77,7 +76,10 @@ public class BluetoothConnect extends AppCompatActivity {
         }
     }
 
-    public void onClickSearchDevices(View view) {
+    public void onClickStartPairing(View view) {
+        ViewGroup parentView = (ViewGroup) view.getParent();
+        parentView.removeView(view);
+
         bluetoothAdapter.startDiscovery();
         Toast.makeText(this, "Searching for devices...", Toast.LENGTH_LONG).show();
     }
