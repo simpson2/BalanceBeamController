@@ -14,19 +14,26 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class BluetoothConnect extends AppCompatActivity {
 
-    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    private ArrayAdapter<String> newDevicesArrayAdapter;
+    private BluetoothAdapter bluetoothAdapter;
     private static final int REQUEST_ENABLE_BT = 1;
+
+    private ArrayAdapter<String> newDevicesArrayAdapter;
+    private ListView newDevicesListView;
+    private ArrayList<String> newDevicesArray = new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bluetooth_connect);
 
-        ListView newDevicesListView = findViewById(R.id.device_list);
-        newDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.bluetooth_connect);
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+
+        newDevicesListView = findViewById(R.id.device_list);
+        newDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.bluetooth_connect, newDevicesArray);
         newDevicesListView.setAdapter(newDevicesArrayAdapter);
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -44,7 +51,7 @@ public class BluetoothConnect extends AppCompatActivity {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
                 String deviceAddress = device.getAddress();
-                newDevicesArrayAdapter.add(deviceAddress);
+                newDevicesArray.add(deviceAddress);
                 newDevicesArrayAdapter.notifyDataSetChanged();
             }
         }
