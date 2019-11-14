@@ -21,7 +21,7 @@ public class BluetoothConnect extends AppCompatActivity {
     private static final int REQUEST_ENABLE_BT = 1;
 
     private ListView deviceList;
-    private ArrayList<String> deviceListArrayList = new ArrayList<String>();
+    private ArrayList<String> deviceListArrayList;
     private ArrayAdapter<String> deviceListArrayAdapter;
 
 
@@ -36,19 +36,6 @@ public class BluetoothConnect extends AppCompatActivity {
         registerReceiver(receiver, filter);
 
         initBluetooth();
-    }
-
-    public void populateListView(View view) {
-
-        deviceListArrayList.add("this");
-        deviceListArrayList.add("is");
-        deviceListArrayList.add("a");
-        deviceListArrayList.add("test");
-
-        deviceList = findViewById(R.id.device_list);
-        deviceListArrayAdapter = new ArrayAdapter<String>(this, R.layout.bluetooth_connect, deviceListArrayList);
-        deviceList.setAdapter(deviceListArrayAdapter);
-
     }
 
     final BroadcastReceiver receiver = new BroadcastReceiver() {
