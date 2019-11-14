@@ -11,19 +11,16 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 
 public class BluetoothConnect extends AppCompatActivity {
 
     private BluetoothAdapter bluetoothAdapter;
     private static final int REQUEST_ENABLE_BT = 1;
 
-    private ArrayAdapter<String> newDevicesArrayAdapter;
-    private ListView newDevicesListView;
-    private ArrayList<String> newDevicesArray = new ArrayList<String>();
+    private ListView deviceList;
+    private ArrayAdapter<String> deviceListArrayAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,9 +29,9 @@ public class BluetoothConnect extends AppCompatActivity {
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
-        newDevicesListView = findViewById(R.id.device_list);
-        newDevicesArrayAdapter = new ArrayAdapter<String>(this, R.layout.bluetooth_connect, newDevicesArray);
-        newDevicesListView.setAdapter(newDevicesArrayAdapter);
+        deviceList = findViewById(R.id.device_list);
+        deviceListArrayAdapter = new ArrayAdapter<String>(this, R.layout.bluetooth_connect);
+        deviceList.setAdapter(deviceListArrayAdapter);
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(receiver, filter);
@@ -50,9 +47,11 @@ public class BluetoothConnect extends AppCompatActivity {
             if(BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
+                String deviceName = device.getName();
                 String deviceAddress = device.getAddress();
-                newDevicesArray.add(deviceAddress);
-                newDevicesArrayAdapter.notifyDataSetChanged();
+
+                deviceListArrayAdapter.add(deviceName+"\n"+deviceAddress);
+                deviceListArrayAdapter.notifyDataSetChanged();
             }
         }
     };
