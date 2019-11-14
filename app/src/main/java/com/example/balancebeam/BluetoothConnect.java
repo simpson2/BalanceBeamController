@@ -33,6 +33,11 @@ public class BluetoothConnect extends AppCompatActivity {
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         deviceListArrayList = new ArrayList<String>();
+        deviceListArrayList.add("this");
+        deviceListArrayList.add("is");
+        deviceListArrayList.add("a");
+        deviceListArrayList.add("test");
+
         deviceList = findViewById(R.id.device_list);
         deviceListArrayAdapter = new ArrayAdapter<String>(this, R.layout.bluetooth_connect, deviceListArrayList);
         deviceList.setAdapter(deviceListArrayAdapter);
@@ -54,7 +59,7 @@ public class BluetoothConnect extends AppCompatActivity {
                 String deviceName = device.getName();
                 String deviceAddress = device.getAddress();
 
-                deviceListArrayList.add(deviceName+"\n"+deviceAddress);
+                //deviceListArrayList.add(deviceName+"\n"+deviceAddress);
             }
         }
     };
