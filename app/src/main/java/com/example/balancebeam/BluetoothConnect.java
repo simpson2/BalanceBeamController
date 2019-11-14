@@ -13,12 +13,15 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class BluetoothConnect extends AppCompatActivity {
 
     private BluetoothAdapter bluetoothAdapter;
     private static final int REQUEST_ENABLE_BT = 1;
 
     private ListView deviceList;
+    private ArrayList<String> deviceListArrayList;
     private ArrayAdapter<String> deviceListArrayAdapter;
 
 
@@ -29,8 +32,9 @@ public class BluetoothConnect extends AppCompatActivity {
 
         bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
+        deviceListArrayList = new ArrayList<String>();
         deviceList = findViewById(R.id.device_list);
-        deviceListArrayAdapter = new ArrayAdapter<String>(this, R.layout.bluetooth_connect);
+        deviceListArrayAdapter = new ArrayAdapter<String>(this, R.layout.bluetooth_connect, deviceListArrayList);
         deviceList.setAdapter(deviceListArrayAdapter);
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
@@ -51,7 +55,6 @@ public class BluetoothConnect extends AppCompatActivity {
                 String deviceAddress = device.getAddress();
 
                 deviceListArrayAdapter.add(deviceName+"\n"+deviceAddress);
-                deviceListArrayAdapter.notifyDataSetChanged();
             }
         }
     };
