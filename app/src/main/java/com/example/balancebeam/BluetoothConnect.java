@@ -14,11 +14,16 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
 public class BluetoothConnect extends AppCompatActivity {
 
+    public static final String TAG = "BluetoothConnect";
+
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    ListView newDevicesListView = findViewById(R.id.device_list);
-    ArrayAdapter<String> newDevicesArrayAdapter;
+    ListView listView;
+    ArrayList<String> arrayList = new ArrayList<>();
+    ArrayAdapter<String> arrayAdapter;
     private static final int REQUEST_ENABLE_BT = 1;
 
     @Override
@@ -26,10 +31,16 @@ public class BluetoothConnect extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bluetooth_connect);
 
-        newDevicesArrayAdapter = new ArrayAdapter<>(this, R.layout.bluetooth_connect_device_list);
-
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(receiver, filter);
+
+        listView = findViewById(R.id.device_list);
+        arrayAdapter = new ArrayAdapter<>(this, R.layout.device_list, arrayList);
+
+        for (int i = 0; i < 10; i++) {
+            arrayList.add("Test data "+i);
+            listView.setAdapter(arrayAdapter);
+        }
 
         initBluetooth();
     }
@@ -43,8 +54,8 @@ public class BluetoothConnect extends AppCompatActivity {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
                 String deviceAddress = device.getAddress();
-                newDevicesArrayAdapter.add(deviceAddress);
-                newDevicesListView.setAdapter(newDevicesArrayAdapter);
+                arrayList.add("Broadcast Received");
+                listView.setAdapter(arrayAdapter);
             }
         }
     };
@@ -76,7 +87,7 @@ public class BluetoothConnect extends AppCompatActivity {
         }
     }
 
-    public void onClickStartPairing(View view) {
+    public void onClickStartDiscovery(View view) {
         ViewGroup parentView = (ViewGroup) view.getParent();
         parentView.removeView(view);
 
