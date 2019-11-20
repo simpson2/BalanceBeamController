@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -15,12 +16,15 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Set;
 
 public class BluetoothConnect extends AppCompatActivity {
 
+    //TODO DELETE AFTER TESTING
     public static final String TAG = "BluetoothConnect";
 
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+    Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
     ListView listView;
     ArrayList<String> arrayList = new ArrayList<>();
     ArrayAdapter<String> arrayAdapter;
@@ -37,15 +41,10 @@ public class BluetoothConnect extends AppCompatActivity {
         listView = findViewById(R.id.device_list);
         arrayAdapter = new ArrayAdapter<>(this, R.layout.device_list, arrayList);
 
-        for (int i = 0; i < 10; i++) {
-            arrayList.add("Test data "+i);
-            listView.setAdapter(arrayAdapter);
-        }
-
         initBluetooth();
     }
 
-    final BroadcastReceiver receiver = new BroadcastReceiver() {
+    private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
             String action = intent.getAction();
@@ -54,7 +53,7 @@ public class BluetoothConnect extends AppCompatActivity {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
                 String deviceAddress = device.getAddress();
-                arrayList.add("Broadcast Received");
+                arrayList.add(deviceAddress);
                 listView.setAdapter(arrayAdapter);
             }
         }
@@ -91,7 +90,24 @@ public class BluetoothConnect extends AppCompatActivity {
         ViewGroup parentView = (ViewGroup) view.getParent();
         parentView.removeView(view);
 
-        bluetoothAdapter.startDiscovery();
+        //TODO DELETE AFTER TESTING
+        for (int i = 0; i < 10; i++) {
+            arrayList.add("Test data "+i);
+            listView.setAdapter(arrayAdapter);
+        }
+
+        if(pairedDevices.size() > 0) {
+            for(BluetoothDevice device : pairedDevices) {
+                String deviceAddress = device.getAddress();
+
+                arrayList.add(deviceAddress);
+                listView.setAdapter(arrayAdapter);
+            }
+        }
+
+        //TODO MODIFY AFTER TESTING
+        boolean discoverySuccess = bluetoothAdapter.startDiscovery();
+        Log.d(TAG, "onClickStartDiscovery: "+discoverySuccess);
         Toast.makeText(this, "Searching for devices...", Toast.LENGTH_LONG).show();
     }
 
