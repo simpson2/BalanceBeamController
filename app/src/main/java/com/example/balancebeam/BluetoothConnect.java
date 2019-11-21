@@ -24,7 +24,7 @@ public class BluetoothConnect extends AppCompatActivity {
     public static final String TAG = "BluetoothConnect";
 
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    Set<BluetoothDevice> pairedDevices = bluetoothAdapter.getBondedDevices();
+    Set<BluetoothDevice> pairedDevices;
     ListView listView;
     ArrayList<String> arrayList = new ArrayList<>();
     ArrayAdapter<String> arrayAdapter;
@@ -75,6 +75,9 @@ public class BluetoothConnect extends AppCompatActivity {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
+        else {
+            pairedDevices = bluetoothAdapter.getBondedDevices();
+        }
     }
 
     @Override
@@ -82,6 +85,9 @@ public class BluetoothConnect extends AppCompatActivity {
         if(requestCode == REQUEST_ENABLE_BT) {
             if(resultCode == RESULT_CANCELED) {
                 noBt();
+            }
+            else {
+                pairedDevices = bluetoothAdapter.getBondedDevices();
             }
         }
     }
@@ -107,7 +113,7 @@ public class BluetoothConnect extends AppCompatActivity {
 
         //TODO MODIFY AFTER TESTING
         boolean discoverySuccess = bluetoothAdapter.startDiscovery();
-        Log.d(TAG, "onClickStartDiscovery: "+discoverySuccess);
+        Log.d(TAG, "startDiscoverySTATUS: "+discoverySuccess);
         Toast.makeText(this, "Searching for devices...", Toast.LENGTH_LONG).show();
     }
 
