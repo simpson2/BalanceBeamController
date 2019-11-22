@@ -92,15 +92,9 @@ public class BluetoothConnect extends AppCompatActivity {
         }
     }
 
-    public void onClickStartDiscovery(View view) {
+    public void startDiscovery(View view) {
         ViewGroup parentView = (ViewGroup) view.getParent();
         parentView.removeView(view);
-
-        //TODO DELETE AFTER TESTING
-        for (int i = 0; i < 10; i++) {
-            arrayList.add("Test data "+i);
-            listView.setAdapter(arrayAdapter);
-        }
 
         if(pairedDevices.size() > 0) {
             for(BluetoothDevice device : pairedDevices) {
@@ -109,6 +103,12 @@ public class BluetoothConnect extends AppCompatActivity {
                 arrayList.add(deviceAddress);
                 listView.setAdapter(arrayAdapter);
             }
+        }
+
+        //TODO DELETE AFTER TESTING
+        for (int i = 0; i < 10; i++) {
+            arrayList.add("Test data "+i);
+            listView.setAdapter(arrayAdapter);
         }
 
         //TODO MODIFY AFTER TESTING
