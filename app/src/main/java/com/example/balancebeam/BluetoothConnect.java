@@ -7,7 +7,9 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -18,8 +20,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Set;
-
-import com.example.balancebeam.AppPermissions;
 
 public class BluetoothConnect extends AppCompatActivity {
 
@@ -38,9 +38,8 @@ public class BluetoothConnect extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bluetooth_connect);
 
-        AppPermissions.checkPermissions(this, Manifest.permission.BLUETOOTH);
-        AppPermissions.checkPermissions(this, Manifest.permission.BLUETOOTH_ADMIN);
-        AppPermissions.checkPermissions(this, Manifest.permission.ACCESS_COARSE_LOCATION);
+        boolean locationAccess = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED;
+        Log.d(TAG, "locationAccess: "+locationAccess);
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(receiver, filter);
