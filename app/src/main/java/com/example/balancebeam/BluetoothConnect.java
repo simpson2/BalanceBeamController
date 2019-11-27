@@ -35,7 +35,7 @@ public class BluetoothConnect extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bluetooth_connect);
 
-        AppPermissions.checkPermission(this, this);
+        AppPermissions.checkPermission(this); // Bluetooth API requires ACCESS_COARSE_LOCATION permission for discovery process
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(receiver, filter);
