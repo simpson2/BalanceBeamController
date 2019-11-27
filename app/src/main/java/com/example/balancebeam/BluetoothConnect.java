@@ -6,6 +6,7 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -35,7 +36,11 @@ public class BluetoothConnect extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bluetooth_connect);
 
-        AppPermissions.checkPermission(this); // Bluetooth API requires ACCESS_COARSE_LOCATION permission for discovery process
+        /*Bluetooth API requires ACCESS_COARSE_LOCATION permission for discovery process
+        * if sdk < 23 then permissions gotten at install else permissions gotten at run-time*/
+        if(Build.VERSION.SDK_INT >= 23) {
+            AppPermissions.checkPermission(this);
+        }
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(receiver, filter);
