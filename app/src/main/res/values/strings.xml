@@ -2,6 +2,6 @@
     <string name="app_name">BalanceBeamController</string>
     <string name="no_bluetooth">Bluetooth does not exist on this device. As such, this app is incompatible.</string>
     <string name="initiate_pairing">Initiate pairing</string>
-    <string name="paired_devices">Paired devices</string>
+    <string name="paired_devices">Previously paired devices</string>
     <string name="discovered_devices">Discovered devices</string>
 </resources>
