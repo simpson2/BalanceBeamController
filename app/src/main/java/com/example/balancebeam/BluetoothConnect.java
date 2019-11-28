@@ -1,13 +1,17 @@
 package com.example.balancebeam;
 
+import android.Manifest;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -35,18 +39,13 @@ public class BluetoothConnect extends AppCompatActivity {
     ArrayList<String> discDevicesArrayList = new ArrayList<>();
     ArrayAdapter<String> discDevicesArrayAdapter;
 
+    private static final int LOCATION_REQUEST = 1;
     private static final int REQUEST_ENABLE_BT = 1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.bluetooth_connect);
-
-        /*Bluetooth API requires ACCESS_COARSE_LOCATION permission for discovery process
-        * if sdk < 23 then permissions gotten at install else permissions gotten at run-time*/
-        if(Build.VERSION.SDK_INT >= 23) {
-            AppPermissions.checkPermission(this);
-        }
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(receiver, filter);
@@ -58,7 +57,14 @@ public class BluetoothConnect extends AppCompatActivity {
         discDevicesArrayAdapter = new ArrayAdapter<>(this, R.layout.discovered_devices_list, discDevicesArrayList);
         discDevicesListView.setAdapter(discDevicesArrayAdapter);
 
-        startBluetooth();
+        /*Bluetooth API requires ACCESS_COARSE_LOCATION permission for discovery process
+        * if sdk < 23 then permissions gotten at install else permissions gotten at run-time*/
+        if(Build.VERSION.SDK_INT >= 23) {
+            checkPermission();
+        }
+        else {
+            startBluetooth();
+        }
     }
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -87,7 +93,7 @@ public class BluetoothConnect extends AppCompatActivity {
     public void startBluetooth() {
 
         if(bluetoothAdapter == null) {
-            noBluetooth();
+            noBluetoothOrLocation();
         }
         else if(!bluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -102,7 +108,7 @@ public class BluetoothConnect extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == REQUEST_ENABLE_BT) {
             if(resultCode == RESULT_CANCELED) {
-                noBluetooth();
+                noBluetoothOrLocation();
             }
             else {
                 pairedDevices = bluetoothAdapter.getBondedDevices();
@@ -126,8 +132,30 @@ public class BluetoothConnect extends AppCompatActivity {
         bluetoothAdapter.startDiscovery();
     }
 
-    public void noBluetooth() {
-        Intent noBtIntent = new Intent(this, NoBluetooth.class);
+    public void checkPermission() {
+
+        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
+                    LOCATION_REQUEST);
+        }
+    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        if(requestCode == LOCATION_REQUEST) {
+            if(grantResults.length > 0 &&
+            grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                startBluetooth();
+            }
+            else {
+                noBluetoothOrLocation();
+            }
+        }
+    }
+
+    public void noBluetoothOrLocation() {
+        Intent noBtIntent = new Intent(this, NoBluetoothOrLocation.class);
         startActivity(noBtIntent);
     }
 }
