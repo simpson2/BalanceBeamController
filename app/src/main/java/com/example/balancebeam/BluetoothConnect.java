@@ -140,6 +140,9 @@ public class BluetoothConnect extends AppCompatActivity {
             ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION},
                     LOCATION_REQUEST);
         }
+        else {
+            startBluetooth();
+        }
     }
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
