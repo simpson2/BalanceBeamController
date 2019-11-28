@@ -21,9 +21,14 @@ public class BluetoothConnect extends AppCompatActivity {
 
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     Set<BluetoothDevice> pairedDevices;
-    ListView listView;
-    ArrayList<String> arrayList = new ArrayList<>();
-    ArrayAdapter<String> arrayAdapter;
+
+    ListView pairedDevicesListView;
+    ArrayList<String> pairedDevicesArrayList = new ArrayList<>();
+    ArrayAdapter<String> pairedDevicesArrayAdapter;
+    ListView discDevicesListView;
+    ArrayList<String> discDevicesArrayList = new ArrayList<>();
+    ArrayAdapter<String> discDevicesArrayAdapter;
+
     private static final int REQUEST_ENABLE_BT = 1;
 
     @Override
@@ -40,9 +45,12 @@ public class BluetoothConnect extends AppCompatActivity {
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(receiver, filter);
 
-        listView = findViewById(R.id.device_list);
-        arrayAdapter = new ArrayAdapter<>(this, R.layout.device_list, arrayList);
-        listView.setAdapter(arrayAdapter);
+        pairedDevicesListView = findViewById(R.id.paired_devices_list);
+        pairedDevicesArrayAdapter = new ArrayAdapter<>(this, R.layout.paired_devices_list, pairedDevicesArrayList);
+        pairedDevicesListView.setAdapter(pairedDevicesArrayAdapter);
+        discDevicesListView = findViewById(R.id.discovered_devices_list);
+        discDevicesArrayAdapter = new ArrayAdapter<>(this, R.layout.discovered_devices_list, discDevicesArrayList);
+        discDevicesListView.setAdapter(discDevicesArrayAdapter);
 
         initBluetooth();
     }
@@ -56,8 +64,8 @@ public class BluetoothConnect extends AppCompatActivity {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
                 String deviceAddress = device.getAddress();
-                arrayList.add(deviceAddress);
-                arrayAdapter.notifyDataSetChanged();
+                discDevicesArrayList.add(deviceAddress);
+                discDevicesArrayAdapter.notifyDataSetChanged();
             }
         }
     };
@@ -103,15 +111,9 @@ public class BluetoothConnect extends AppCompatActivity {
             for(BluetoothDevice device : pairedDevices) {
                 String deviceAddress = device.getAddress();
 
-                arrayList.add(deviceAddress);
-                arrayAdapter.notifyDataSetChanged();
+                pairedDevicesArrayList.add(deviceAddress);
+                pairedDevicesArrayAdapter.notifyDataSetChanged();
             }
-        }
-
-        //TODO DELETE AFTER TESTING
-        for (int i = 0; i < 16; i++) {
-            arrayList.add("Test data "+i);
-            arrayAdapter.notifyDataSetChanged();
         }
 
         bluetoothAdapter.startDiscovery();
