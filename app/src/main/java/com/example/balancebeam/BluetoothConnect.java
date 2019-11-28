@@ -22,6 +22,12 @@ public class BluetoothConnect extends AppCompatActivity {
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     Set<BluetoothDevice> pairedDevices;
 
+    /*Pairing screen split into two ListViews such that user can see previously
+    * paired devices while also seeing discovered devices as they appear.
+    * Thus it is necessary to have one ArrayList (to hold all the
+    * paired/discovered devices which will then be added to the ListView)
+    * and ArrayAdapter (to update ListView with data from ArrayList)
+    * for each ListView.*/
     ListView pairedDevicesListView;
     ArrayList<String> pairedDevicesArrayList = new ArrayList<>();
     ArrayAdapter<String> pairedDevicesArrayAdapter;
@@ -65,7 +71,8 @@ public class BluetoothConnect extends AppCompatActivity {
 
                 String deviceAddress = device.getAddress();
                 discDevicesArrayList.add(deviceAddress);
-                discDevicesArrayAdapter.notifyDataSetChanged();
+                discDevicesArrayAdapter.notifyDataSetChanged(); /*notifyDataSetChanged
+                allows ListView to update without scroll being reset to the top each time.*/
             }
         }
     };
