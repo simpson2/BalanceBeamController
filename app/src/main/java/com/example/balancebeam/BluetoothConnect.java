@@ -42,6 +42,7 @@ public class BluetoothConnect extends AppCompatActivity {
 
         listView = findViewById(R.id.device_list);
         arrayAdapter = new ArrayAdapter<>(this, R.layout.device_list, arrayList);
+        listView.setAdapter(arrayAdapter);
 
         initBluetooth();
     }
@@ -56,7 +57,7 @@ public class BluetoothConnect extends AppCompatActivity {
 
                 String deviceAddress = device.getAddress();
                 arrayList.add(deviceAddress);
-                listView.setAdapter(arrayAdapter);
+                arrayAdapter.notifyDataSetChanged();
             }
         }
     };
@@ -103,14 +104,14 @@ public class BluetoothConnect extends AppCompatActivity {
                 String deviceAddress = device.getAddress();
 
                 arrayList.add(deviceAddress);
-                listView.setAdapter(arrayAdapter);
+                arrayAdapter.notifyDataSetChanged();
             }
         }
 
         //TODO DELETE AFTER TESTING
         for (int i = 0; i < 16; i++) {
             arrayList.add("Test data "+i);
-            listView.setAdapter(arrayAdapter);
+            arrayAdapter.notifyDataSetChanged();
         }
 
         bluetoothAdapter.startDiscovery();
