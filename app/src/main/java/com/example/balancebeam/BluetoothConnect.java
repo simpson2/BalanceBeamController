@@ -110,7 +110,7 @@ public class BluetoothConnect extends AppCompatActivity {
         }
 
         //TODO DELETE AFTER TESTING
-        for (int i = 0; i < 5; i++) {
+        for (int i = 0; i < 16; i++) {
             arrayList.add("Test data "+i);
             listView.setAdapter(arrayAdapter);
         }
