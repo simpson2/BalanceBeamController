@@ -58,7 +58,7 @@ public class BluetoothConnect extends AppCompatActivity {
         discDevicesArrayAdapter = new ArrayAdapter<>(this, R.layout.discovered_devices_list, discDevicesArrayList);
         discDevicesListView.setAdapter(discDevicesArrayAdapter);
 
-        initBluetooth();
+        startBluetooth();
     }
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
@@ -84,10 +84,10 @@ public class BluetoothConnect extends AppCompatActivity {
         unregisterReceiver(receiver);
     }
 
-    public void initBluetooth() {
+    public void startBluetooth() {
 
         if(bluetoothAdapter == null) {
-            noBt();
+            noBluetooth();
         }
         else if(!bluetoothAdapter.isEnabled()) {
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
@@ -102,7 +102,7 @@ public class BluetoothConnect extends AppCompatActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if(requestCode == REQUEST_ENABLE_BT) {
             if(resultCode == RESULT_CANCELED) {
-                noBt();
+                noBluetooth();
             }
             else {
                 pairedDevices = bluetoothAdapter.getBondedDevices();
@@ -126,7 +126,7 @@ public class BluetoothConnect extends AppCompatActivity {
         bluetoothAdapter.startDiscovery();
     }
 
-    public void noBt() {
+    public void noBluetooth() {
         Intent noBtIntent = new Intent(this, NoBluetooth.class);
         startActivity(noBtIntent);
     }
