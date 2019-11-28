@@ -21,9 +21,6 @@ import java.util.Set;
 
 public class BluetoothConnect extends AppCompatActivity {
 
-    //TODO DELETE AFTER TESTING
-    public static final String TAG = "BluetoothConnect";
-
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     Set<BluetoothDevice> pairedDevices;
     ListView listView;
@@ -113,15 +110,12 @@ public class BluetoothConnect extends AppCompatActivity {
         }
 
         //TODO DELETE AFTER TESTING
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             arrayList.add("Test data "+i);
             listView.setAdapter(arrayAdapter);
         }
 
-        //TODO MODIFY AFTER TESTING
-        boolean discoverySuccess = bluetoothAdapter.startDiscovery();
-        Log.d(TAG, "startDiscoverySTATUS: "+discoverySuccess);
-        Toast.makeText(this, "Searching for devices...", Toast.LENGTH_LONG).show();
+        bluetoothAdapter.startDiscovery();
     }
 
     public void noBt() {
