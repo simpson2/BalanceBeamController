@@ -21,7 +21,7 @@ import android.widget.ListView;
 import java.util.ArrayList;
 import java.util.Set;
 
-public class BluetoothConnect extends AppCompatActivity {
+public class DeviceDiscovery extends AppCompatActivity {
 
     BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
     Set<BluetoothDevice> pairedDevices;
