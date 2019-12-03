@@ -9,14 +9,18 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        android:label="@string/app_name">
+        android:theme="@style/AppTheme">
+        <service
+            android:name=".BluetoothConnect"
+            android:exported="false"
+            android:description="Responsible for connecting to
+            and maintaining connection between host and selected device" />
 
-        <activity android:name=".NoBluetoothOrLocation"></activity>
+        <activity android:name=".NoBluetoothOrLocation" />
         <activity android:name=".DeviceDiscovery">
-
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
