@@ -15,8 +15,10 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Set;
@@ -51,14 +53,29 @@ public class DeviceDiscovery extends AppCompatActivity {
         registerReceiver(receiver, filter);
 
         pairedDevicesListView = findViewById(R.id.paired_devices_list);
+        pairedDevicesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String MAC = parent.getItemAtPosition(position).toString();
+                Toast.makeText(DeviceDiscovery.this, "DISCOVERED DEVICES: "+MAC, Toast.LENGTH_SHORT).show();
+            }
+        });
         pairedDevicesArrayAdapter = new ArrayAdapter<>(this, R.layout.paired_devices_list, pairedDevicesArrayList);
         pairedDevicesListView.setAdapter(pairedDevicesArrayAdapter);
+
         discDevicesListView = findViewById(R.id.discovered_devices_list);
+        discDevicesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                String MAC = parent.getItemAtPosition(position).toString();
+                Toast.makeText(DeviceDiscovery.this, "DISCOVERED DEVICES: "+MAC, Toast.LENGTH_SHORT).show();
+            }
+        });
         discDevicesArrayAdapter = new ArrayAdapter<>(this, R.layout.discovered_devices_list, discDevicesArrayList);
         discDevicesListView.setAdapter(discDevicesArrayAdapter);
 
         /*Bluetooth API requires ACCESS_COARSE_LOCATION permission for discovery process
-        * if sdk < 23 then permissions gotten at install else permissions gotten at run-time*/
+        * if SDK < 23 then permissions gotten at install else permissions gotten at run-time*/
         if(Build.VERSION.SDK_INT >= 23) {
             checkPermission();
         }
