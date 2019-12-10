@@ -3,7 +3,6 @@ package com.example.balancebeam;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
-import android.content.Intent;
 import android.util.Log;
 
 import java.io.IOException;
@@ -24,7 +23,6 @@ public class DevicePairing extends Thread {
 
         try {
             temp = device.createRfcommSocketToServiceRecord(MY_UUID);
-            Log.i(TAG, "Successfully paired to device.");
         }
         catch(IOException e) {
             Log.e(TAG, "Failed to initialise socket.", e);
@@ -39,6 +37,7 @@ public class DevicePairing extends Thread {
 
         try {
             socket.connect();
+            Log.i(TAG, "Successfully paired to device.");
         }
         catch(IOException connectException) {
             Log.e(TAG, "Failed to connect to device.", connectException);
