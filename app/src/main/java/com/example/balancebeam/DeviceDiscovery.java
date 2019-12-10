@@ -43,6 +43,7 @@ public class DeviceDiscovery extends AppCompatActivity {
 
     private static final int LOCATION_REQUEST = 1;
     private static final int REQUEST_ENABLE_BT = 1;
+    String MAC = "";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,9 +56,9 @@ public class DeviceDiscovery extends AppCompatActivity {
         pairedDevicesListView = findViewById(R.id.paired_devices_list);
         pairedDevicesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String MAC = parent.getItemAtPosition(position).toString();
-                Toast.makeText(DeviceDiscovery.this, "DISCOVERED DEVICES: "+MAC, Toast.LENGTH_SHORT).show();
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) { //Register onClick listener for each ListView
+                MAC = parent.getItemAtPosition(position).toString();
+                Toast.makeText(DeviceDiscovery.this, "PAIRED DEVICES -> "+MAC, Toast.LENGTH_SHORT).show();
             }
         });
         pairedDevicesArrayAdapter = new ArrayAdapter<>(this, R.layout.paired_devices_list, pairedDevicesArrayList);
@@ -67,8 +68,8 @@ public class DeviceDiscovery extends AppCompatActivity {
         discDevicesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String MAC = parent.getItemAtPosition(position).toString();
-                Toast.makeText(DeviceDiscovery.this, "DISCOVERED DEVICES: "+MAC, Toast.LENGTH_SHORT).show();
+                MAC = parent.getItemAtPosition(position).toString();
+                Toast.makeText(DeviceDiscovery.this, "DISCOVERED DEVICES -> "+MAC, Toast.LENGTH_SHORT).show();
             }
         });
         discDevicesArrayAdapter = new ArrayAdapter<>(this, R.layout.discovered_devices_list, discDevicesArrayList);
@@ -112,7 +113,7 @@ public class DeviceDiscovery extends AppCompatActivity {
         if(bluetoothAdapter == null) {
             noBluetoothOrLocation();
         }
-        else if(!bluetoothAdapter.isEnabled()) {
+        else if(!bluetoothAdapter.isEnabled()) { //Check if device BT is on. If off, ask for permission to turn on without leaving app
             Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
             startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT);
         }
@@ -122,7 +123,7 @@ public class DeviceDiscovery extends AppCompatActivity {
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) { //If permission refused, inform of incompatibility. If granted, turn BT on
         if(requestCode == REQUEST_ENABLE_BT) {
             if(resultCode == RESULT_CANCELED) {
                 noBluetoothOrLocation();
