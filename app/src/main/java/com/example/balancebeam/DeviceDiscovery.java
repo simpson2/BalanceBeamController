@@ -58,7 +58,7 @@ public class DeviceDiscovery extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) { //Register onClick listener for each ListView
                 MAC = parent.getItemAtPosition(position).toString();
-                Toast.makeText(DeviceDiscovery.this, "PAIRED DEVICES -> "+MAC, Toast.LENGTH_SHORT).show();
+                Toast.makeText(DeviceDiscovery.this, MAC, Toast.LENGTH_SHORT).show();
             }
         });
         pairedDevicesArrayAdapter = new ArrayAdapter<>(this, R.layout.paired_devices_list, pairedDevicesArrayList);
@@ -69,7 +69,7 @@ public class DeviceDiscovery extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MAC = parent.getItemAtPosition(position).toString();
-                Toast.makeText(DeviceDiscovery.this, "DISCOVERED DEVICES -> "+MAC, Toast.LENGTH_SHORT).show();
+                Toast.makeText(DeviceDiscovery.this, MAC, Toast.LENGTH_SHORT).show();
             }
         });
         discDevicesArrayAdapter = new ArrayAdapter<>(this, R.layout.discovered_devices_list, discDevicesArrayList);
@@ -147,7 +147,7 @@ public class DeviceDiscovery extends AppCompatActivity {
             }
         }
 
-        bluetoothAdapter.startDiscovery();
+        bluetoothAdapter.startDiscovery(); //Android's API function to start discovery - not the same function  as above
     }
 
     public void checkPermission() {
