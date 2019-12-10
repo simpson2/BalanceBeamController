@@ -35,15 +35,15 @@ public class DeviceDiscovery extends AppCompatActivity {
     * and ArrayAdapter (to update ListView with data from ArrayList)
     * for each ListView.*/
     ListView pairedDevicesListView;
-    ArrayList<Object> pairedDevicesArrayList = new ArrayList<>();
-    ArrayAdapter<Object> pairedDevicesArrayAdapter;
+    ArrayList<String> pairedDevicesArrayList = new ArrayList<>();
+    ArrayAdapter<String> pairedDevicesArrayAdapter;
     ListView discDevicesListView;
-    ArrayList<Object> discDevicesArrayList = new ArrayList<>();
-    ArrayAdapter<Object> discDevicesArrayAdapter;
+    ArrayList<String> discDevicesArrayList = new ArrayList<>();
+    ArrayAdapter<String> discDevicesArrayAdapter;
 
     private static final int LOCATION_REQUEST = 1;
     private static final int REQUEST_ENABLE_BT = 1;
-    String MAC = "";
+    String MAC;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,7 +58,8 @@ public class DeviceDiscovery extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) { //Register onClick listener for each ListView
                 MAC = parent.getItemAtPosition(position).toString();
-                Toast.makeText(DeviceDiscovery.this, MAC, Toast.LENGTH_SHORT).show();
+                DevicePairing devicePairing = new DevicePairing(MAC);
+                devicePairing.start();
             }
         });
         pairedDevicesArrayAdapter = new ArrayAdapter<>(this, R.layout.paired_devices_list, pairedDevicesArrayList);
@@ -69,7 +70,8 @@ public class DeviceDiscovery extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 MAC = parent.getItemAtPosition(position).toString();
-                Toast.makeText(DeviceDiscovery.this, MAC, Toast.LENGTH_SHORT).show();
+                DevicePairing devicePairing = new DevicePairing(MAC);
+                devicePairing.start();
             }
         });
         discDevicesArrayAdapter = new ArrayAdapter<>(this, R.layout.discovered_devices_list, discDevicesArrayList);
@@ -93,8 +95,8 @@ public class DeviceDiscovery extends AppCompatActivity {
             if(BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
-                //String deviceAddress = device.getAddress();
-                discDevicesArrayList.add(device);
+                String deviceAddress = device.getAddress();
+                discDevicesArrayList.add(deviceAddress);
                 discDevicesArrayAdapter.notifyDataSetChanged(); /*notifyDataSetChanged
                 allows ListView to update without scroll being reset to the top each time.*/
             }
@@ -140,9 +142,9 @@ public class DeviceDiscovery extends AppCompatActivity {
 
         if(pairedDevices.size() > 0) {
             for(BluetoothDevice device : pairedDevices) {
-                //String deviceAddress = device.getAddress();
+                String deviceAddress = device.getAddress();
 
-                pairedDevicesArrayList.add(device);
+                pairedDevicesArrayList.add(deviceAddress);
                 pairedDevicesArrayAdapter.notifyDataSetChanged();
             }
         }
