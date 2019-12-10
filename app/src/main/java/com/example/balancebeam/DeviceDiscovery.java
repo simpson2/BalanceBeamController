@@ -35,11 +35,11 @@ public class DeviceDiscovery extends AppCompatActivity {
     * and ArrayAdapter (to update ListView with data from ArrayList)
     * for each ListView.*/
     ListView pairedDevicesListView;
-    ArrayList<String> pairedDevicesArrayList = new ArrayList<>();
-    ArrayAdapter<String> pairedDevicesArrayAdapter;
+    ArrayList<Object> pairedDevicesArrayList = new ArrayList<>();
+    ArrayAdapter<Object> pairedDevicesArrayAdapter;
     ListView discDevicesListView;
-    ArrayList<String> discDevicesArrayList = new ArrayList<>();
-    ArrayAdapter<String> discDevicesArrayAdapter;
+    ArrayList<Object> discDevicesArrayList = new ArrayList<>();
+    ArrayAdapter<Object> discDevicesArrayAdapter;
 
     private static final int LOCATION_REQUEST = 1;
     private static final int REQUEST_ENABLE_BT = 1;
@@ -93,8 +93,8 @@ public class DeviceDiscovery extends AppCompatActivity {
             if(BluetoothDevice.ACTION_FOUND.equals(action)) {
                 BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
 
-                String deviceAddress = device.getAddress();
-                discDevicesArrayList.add(deviceAddress);
+                //String deviceAddress = device.getAddress();
+                discDevicesArrayList.add(device);
                 discDevicesArrayAdapter.notifyDataSetChanged(); /*notifyDataSetChanged
                 allows ListView to update without scroll being reset to the top each time.*/
             }
@@ -140,9 +140,9 @@ public class DeviceDiscovery extends AppCompatActivity {
 
         if(pairedDevices.size() > 0) {
             for(BluetoothDevice device : pairedDevices) {
-                String deviceAddress = device.getAddress();
+                //String deviceAddress = device.getAddress();
 
-                pairedDevicesArrayList.add(deviceAddress);
+                pairedDevicesArrayList.add(device);
                 pairedDevicesArrayAdapter.notifyDataSetChanged();
             }
         }
