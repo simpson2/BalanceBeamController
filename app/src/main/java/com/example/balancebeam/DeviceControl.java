@@ -17,15 +17,21 @@ public class DeviceControl extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.device_control);
 
         Intent intent = getIntent();
         String MAC = intent.getStringExtra("ADDRESS");
 
+        setContentView(R.layout.device_control);
+
+        startPairing(MAC);
+    }
+
+    public void startPairing(String MAC) {
+
+
         DevicePairingThread devicePairingThread = new DevicePairingThread(MAC);
         devicePairingThread.run();
     }
-
 
     private class DevicePairingThread extends Thread {
 
