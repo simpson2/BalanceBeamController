@@ -19,7 +19,7 @@ public class DeviceControl extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         Intent intent = getIntent();
-        String MAC = intent.getStringExtra(DevicePairing.ADDRESS);
+        String MAC = intent.getStringExtra("ADDRESS");
 
         DevicePairingThread devicePairingThread = new DevicePairingThread(MAC);
         devicePairingThread.run();
