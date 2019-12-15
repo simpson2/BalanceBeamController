@@ -15,7 +15,7 @@
         android:theme="@style/AppTheme">
         <activity android:name=".DeviceControl"></activity>
         <activity android:name=".NoBluetoothOrLocation" />
-        <activity android:name=".DeviceDiscovery">
+        <activity android:name=".DevicePairing">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <action android:name="android.intent.action.VIEW" />
