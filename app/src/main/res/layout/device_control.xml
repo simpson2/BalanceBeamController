@@ -4,15 +4,16 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".DeviceControl">
+    tools:context=".DeviceControlAnalysis">
 
     <TextView
+        android:id="@+id/connected_to"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
         android:gravity="center"
-        android:text="TEST"
+        android:text="@string/connected_address"
         android:textColor="@android:color/black"
         android:textSize="24sp"/>
 

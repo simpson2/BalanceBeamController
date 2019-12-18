@@ -13,7 +13,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".DeviceControl"></activity>
+        <activity android:name=".DeviceControlAnalysis">
+        </activity>
         <activity android:name=".NoBluetoothOrLocation" />
         <activity android:name=".DevicePairing">
             <intent-filter>

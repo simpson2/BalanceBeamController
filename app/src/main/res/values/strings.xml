@@ -5,4 +5,5 @@
     <string name="initiate_pairing">Scan for devices</string>
     <string name="paired_devices">Previously paired devices</string>
     <string name="discovered_devices">Discovered devices</string>
+    <string name="connected_address">Connected to\n</string>
 </resources>

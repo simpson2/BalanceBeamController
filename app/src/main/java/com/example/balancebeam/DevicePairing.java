@@ -13,7 +13,6 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -58,8 +57,8 @@ public class DevicePairing extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) { //Register onClick listener for each ListView
                 String MAC = parent.getItemAtPosition(position).toString();
-                Log.i("DevicePairing", "onItemClick: "+MAC);
-                Intent intent = new Intent(DevicePairing.this, DeviceControl.class);
+
+                Intent intent = new Intent(DevicePairing.this, DeviceControlAnalysis.class);
                 intent.putExtra("ADDRESS", MAC);
                 startActivity(intent);
             }
@@ -72,8 +71,8 @@ public class DevicePairing extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 String MAC = parent.getItemAtPosition(position).toString();
-                Log.i("DevicePairing", "onItemClick: "+MAC);
-                Intent intent = new Intent(DevicePairing.this, DeviceControl.class);
+
+                Intent intent = new Intent(DevicePairing.this, DeviceControlAnalysis.class);
                 intent.putExtra("ADDRESS", MAC);
                 startActivity(intent);
             }
