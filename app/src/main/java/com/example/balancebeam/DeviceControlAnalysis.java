@@ -18,7 +18,6 @@ public class DeviceControlAnalysis extends AppCompatActivity {
     ConnectThread connectThread;
     ConnectedThread connectedThread;
     String MAC;
-    TextView textView = findViewById(R.id.connected_to);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +29,7 @@ public class DeviceControlAnalysis extends AppCompatActivity {
         startConnectThread(MAC);
         startConnectedThread(connectThread.getSocket());
 
+        TextView textView = findViewById(R.id.connected_to);
         textView.append(MAC);
     }
 
