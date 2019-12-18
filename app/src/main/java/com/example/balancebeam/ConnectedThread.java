@@ -35,6 +35,8 @@ public class ConnectedThread extends Thread {
     @Override
     public void run() {
 
+        Log.i(TAG, "ConnectedThread thread Initialised.");
+
     }
 
     public void cancel() {

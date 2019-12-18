@@ -32,7 +32,7 @@ public class ConnectThread extends Thread {
 
     public void run() {
 
-        Log.i(TAG, "DevicePairingThread Thread Initialised.");
+        Log.i(TAG, "ConnectThread thread Initialised.");
         adapter.cancelDiscovery();
 
         try {
