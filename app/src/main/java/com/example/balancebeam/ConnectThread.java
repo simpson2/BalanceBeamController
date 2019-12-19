@@ -1,11 +1,9 @@
 package com.example.balancebeam;
 
-import android.app.ProgressDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.util.Log;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.util.UUID;
@@ -16,8 +14,6 @@ public class ConnectThread extends Thread {
     final BluetoothAdapter adapter = BluetoothAdapter.getDefaultAdapter();
     BluetoothDevice device;
     BluetoothSocket socket;
-
-    ProgressDialog dialog;
 
     public ConnectThread(String MAC) {
         device = adapter.getRemoteDevice(MAC);

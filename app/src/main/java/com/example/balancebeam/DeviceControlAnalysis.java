@@ -1,17 +1,10 @@
 package com.example.balancebeam;
 
-import android.bluetooth.BluetoothAdapter;
-import android.bluetooth.BluetoothDevice;
 import android.bluetooth.BluetoothSocket;
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.io.IOException;
-import java.util.UUID;
 
 public class DeviceControlAnalysis extends AppCompatActivity {
 
@@ -35,12 +28,12 @@ public class DeviceControlAnalysis extends AppCompatActivity {
 
     public void startConnectThread(String MAC) {
         connectThread = new ConnectThread(MAC);
-        connectThread.run();
+        connectThread.start();
     }
 
     public void startConnectedThread(BluetoothSocket bluetoothSocket) {
         connectedThread = new ConnectedThread(bluetoothSocket);
-        connectedThread.run();
+        connectedThread.start();
     }
 }
 
