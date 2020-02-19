@@ -6,14 +6,38 @@
     android:layout_height="match_parent"
     tools:context=".DeviceControlAnalysis">
 
-    <TextView
-        android:id="@+id/connected_to"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        android:text="@string/connected_address"
-        android:textColor="@android:color/white"
-        android:gravity="center"
-        android:textSize="13sp"
-        android:background="@color/colorPrimaryDark"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/connected_to"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:text="@string/connected_address"
+            android:textColor="@android:color/white"
+            android:gravity="center"
+            android:textSize="13sp"
+            android:background="@color/colorPrimaryDark"/>
+    </LinearLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/FanPowerText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Fan power"
+            android:textColor="@android:color/black"
+            android:textSize="18sp"
+            android:layout_centerVertical="true"/>
+        <SeekBar
+            android:id="@+id/FanPower"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/FanPowerText"/>
+    </RelativeLayout>
 </android.support.constraint.ConstraintLayout>
