@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -43,6 +44,7 @@ public class DevicePairing extends AppCompatActivity {
     private static final int LOCATION_REQUEST = 1;
     private static final int REQUEST_ENABLE_BT = 1;
 
+    final String TAG = "DevicePairing: ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -124,6 +126,7 @@ public class DevicePairing extends AppCompatActivity {
         }
         else {
             pairedDevices = bluetoothAdapter.getBondedDevices();
+            startDiscovery();
         }
     }
 
@@ -135,14 +138,14 @@ public class DevicePairing extends AppCompatActivity {
             }
             else {
                 pairedDevices = bluetoothAdapter.getBondedDevices();
+                startDiscovery();
             }
         }
     }
 
-    public void startDiscovery(View view) {
-        ViewGroup parentView = (ViewGroup) view.getParent();
-        parentView.removeView(view);
-
+    public void startDiscovery() {
+        Log.i(TAG, "startDiscovery: Scanning for devices...");
+        
         if(pairedDevices.size() > 0) {
             for(BluetoothDevice device : pairedDevices) {
                 String deviceAddress = device.getAddress();
