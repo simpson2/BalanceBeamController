@@ -19,8 +19,8 @@
             android:text="@string/connected_address"
             android:textColor="@android:color/white"
             android:gravity="center"
-            android:textSize="13sp"
-            android:background="@color/colorPrimaryDark"/>
+            android:textSize="20sp"
+            android:background="#FF0000"/>
     </LinearLayout>
     <RelativeLayout
         android:layout_width="match_parent"

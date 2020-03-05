@@ -41,8 +41,6 @@ public class ConnectThread extends Thread {
                 Log.e(TAG, "Failed to close socket.", closeException);
             }
         }
-
-        new ConnectedThread(socket);
     }
 
     public void cancel() {
@@ -57,4 +55,3 @@ public class ConnectThread extends Thread {
         return socket;
     }
 }
-
