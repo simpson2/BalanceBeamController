@@ -13,6 +13,7 @@ public class ConnectedThread extends Thread {
     BluetoothSocket socket;
     InputStream inputStream;
     OutputStream outputStream;
+    byte[] buffer;
 
     public ConnectedThread(BluetoothSocket socket) {
         this.socket = socket;
@@ -34,9 +35,19 @@ public class ConnectedThread extends Thread {
 
     @Override
     public void run() {
+        Log.i(TAG, "ConnectedThread thread initialised.");
 
-        Log.i(TAG, "ConnectedThread thread Initialised.");
+        buffer = new byte[1024];
+        int numBytes;
 
+        while(true) {
+            try {
+                numBytes = inputStream.read(buffer);
+            }
+            catch(IOException e) {
+                Log.e(TAG, "Input stream error: "+e+"\n\n"+"DISCONNECTED.");
+            }
+        }
     }
 
     public void cancel() {

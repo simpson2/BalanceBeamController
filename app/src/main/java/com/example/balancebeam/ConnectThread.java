@@ -28,11 +28,14 @@ public class ConnectThread extends Thread {
 
     public void run() {
 
-        Log.i(TAG, "ConnectThread thread Initialised.");
+        Log.i(TAG, "ConnectThread thread initialised.");
         adapter.cancelDiscovery();
 
         try {
             socket.connect();
+            Log.i(TAG, "SOCKET CONNECTED.");
+            //ConnectedThread connectedThread = new ConnectedThread(socket);
+            //connectedThread.start();
         } catch (IOException connectException) {
             Log.e(TAG, "Failed to connect to device.", connectException);
             try {
@@ -41,8 +44,6 @@ public class ConnectThread extends Thread {
                 Log.e(TAG, "Failed to close socket.", closeException);
             }
         }
-
-        new ConnectedThread(socket);
     }
 
     public void cancel() {
@@ -52,9 +53,4 @@ public class ConnectThread extends Thread {
             Log.e(TAG, "Failed to close socket.", e);
         }
     }
-
-    public BluetoothSocket getSocket() {
-        return socket;
-    }
 }
-
