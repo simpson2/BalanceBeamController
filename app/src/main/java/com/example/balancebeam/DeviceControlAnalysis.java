@@ -31,7 +31,7 @@ public class DeviceControlAnalysis extends AppCompatActivity {
         MAC = intent.getStringExtra("ADDRESS");
 
         startConnectThread(MAC);
-        startConnectedThread(connectThread.getSocket());
+        //startConnectedThread(connectThread.getSocket());
 
         TextView textView = findViewById(R.id.connected_to);
         textView.append(MAC);
@@ -42,10 +42,10 @@ public class DeviceControlAnalysis extends AppCompatActivity {
         connectThread.start();
     }
 
-    public void startConnectedThread(BluetoothSocket bluetoothSocket) {
+    /*public void startConnectedThread(BluetoothSocket bluetoothSocket) {
         connectedThread = new ConnectedThread(bluetoothSocket);
         connectedThread.start();
-    }
+    }*/
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
