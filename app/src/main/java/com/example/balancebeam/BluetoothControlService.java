@@ -77,6 +77,7 @@ public class BluetoothControlService {
                     Log.e(TAG, "Failed to close socket.", e);
                 }
             }
+            mState = STATE_CONNECTED;
         }
 
         public void cancel() {
