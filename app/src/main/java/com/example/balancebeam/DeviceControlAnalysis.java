@@ -13,9 +13,9 @@ import android.widget.TextView;
 
 public class DeviceControlAnalysis extends AppCompatActivity {
 
-    ConnectThread connectThread;
-    ConnectedThread connectedThread;
-    String MAC;
+    //Member variables
+    private String MAC;
+    private BluetoothControlService mBCService = new BluetoothControlService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,22 +30,11 @@ public class DeviceControlAnalysis extends AppCompatActivity {
         Intent intent = getIntent();
         MAC = intent.getStringExtra("ADDRESS");
 
-        startConnectThread(MAC);
-        //startConnectedThread(connectThread.getSocket());
+        mBCService.connect(MAC);
 
         TextView textView = findViewById(R.id.connected_to);
         textView.append(MAC);
     }
-
-    public void startConnectThread(String MAC) {
-        connectThread = new ConnectThread(MAC);
-        connectThread.start();
-    }
-
-    /*public void startConnectedThread(BluetoothSocket bluetoothSocket) {
-        connectedThread = new ConnectedThread(bluetoothSocket);
-        connectedThread.start();
-    }*/
 
     private final BroadcastReceiver receiver = new BroadcastReceiver() {
         @Override
