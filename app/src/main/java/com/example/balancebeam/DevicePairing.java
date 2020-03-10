@@ -24,9 +24,12 @@ import java.util.ArrayList;
 import java.util.Set;
 
 public class DevicePairing extends AppCompatActivity {
+    //Debugging
+    private static final String TAG = "DevicePairing: ";
 
-    BluetoothAdapter bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-    Set<BluetoothDevice> pairedDevices;
+    //Member variables
+    private BluetoothAdapter bluetoothAdapter;
+    private Set<BluetoothDevice> pairedDevices;
 
     /*Pairing screen split into two ListViews such that user can see previously
     * paired devices while also seeing discovered devices as they appear.
@@ -34,22 +37,24 @@ public class DevicePairing extends AppCompatActivity {
     * paired/discovered devices which will then be added to the ListView)
     * and ArrayAdapter (to update ListView with data from ArrayList)
     * for each ListView.*/
-    ListView pairedDevicesListView;
-    ArrayList<String> pairedDevicesArrayList = new ArrayList<>();
-    ArrayAdapter<String> pairedDevicesArrayAdapter;
-    ListView discDevicesListView;
-    ArrayList<String> discDevicesArrayList = new ArrayList<>();
-    ArrayAdapter<String> discDevicesArrayAdapter;
+    private ListView pairedDevicesListView;
+    private ArrayList<String> pairedDevicesArrayList = new ArrayList<>();
+    private ArrayAdapter<String> pairedDevicesArrayAdapter;
+    private ListView discDevicesListView;
+    private ArrayList<String> discDevicesArrayList = new ArrayList<>();
+    private ArrayAdapter<String> discDevicesArrayAdapter;
+    private String MAC;
 
+    //Constants for location permission and turning on Bluetooth adapter
     private static final int LOCATION_REQUEST = 1;
     private static final int REQUEST_ENABLE_BT = 1;
-
-    final String TAG = "DevicePairing: ";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.device_pairing);
+
+        bluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
         IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
         registerReceiver(receiver, filter);
@@ -58,7 +63,7 @@ public class DevicePairing extends AppCompatActivity {
         pairedDevicesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) { //Register onClick listener for each ListView
-                String MAC = parent.getItemAtPosition(position).toString();
+                MAC = parent.getItemAtPosition(position).toString();
 
                 Intent intent = new Intent(DevicePairing.this, DeviceControlAnalysis.class);
                 intent.putExtra("ADDRESS", MAC);
@@ -72,7 +77,7 @@ public class DevicePairing extends AppCompatActivity {
         discDevicesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                String MAC = parent.getItemAtPosition(position).toString();
+                MAC = parent.getItemAtPosition(position).toString();
 
                 Intent intent = new Intent(DevicePairing.this, DeviceControlAnalysis.class);
                 intent.putExtra("ADDRESS", MAC);
